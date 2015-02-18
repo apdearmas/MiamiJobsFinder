@@ -21,7 +21,7 @@ namespace MiamiJobsFinder.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("JobFinderContext", throwIfV1Schema: false)
         {
         }
 
