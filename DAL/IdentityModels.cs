@@ -1,10 +1,11 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BusinessDomain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace MiamiJobsFinder.Models
+namespace DAL
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -29,5 +30,10 @@ namespace MiamiJobsFinder.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<ContactPerson> ContactPersons { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<JobOffer> JobOffers { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }
