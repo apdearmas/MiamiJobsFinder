@@ -52,13 +52,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IdentityDb.cs" />
+    <Compile Include="IdentityMigrations\201502191329473_InitialCreate.cs" />
+    <Compile Include="IdentityMigrations\201502191329473_InitialCreate.Designer.cs">
+      <DependentUpon>201502191329473_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IdentityMigrations\201502191441461_DefaultSchema.cs" />
+    <Compile Include="IdentityMigrations\201502191441461_DefaultSchema.Designer.cs">
+      <DependentUpon>201502191441461_DefaultSchema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IdentityMigrations\Configuration.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="IRepository.cs" />
-    <Compile Include="Migrations\201502182304514_InitialCreate.cs" />
-    <Compile Include="Migrations\201502182304514_InitialCreate.Designer.cs">
-      <DependentUpon>201502182304514_InitialCreate.cs</DependentUpon>
+    <Compile Include="MiamiJobsFinderDb.cs" />
+    <Compile Include="MiamiJobsFinderMigrations\201502191330181_InitialCreate.cs" />
+    <Compile Include="MiamiJobsFinderMigrations\201502191330181_InitialCreate.Designer.cs">
+      <DependentUpon>201502191330181_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="MiamiJobsFinderMigrations\Configuration.cs" />
+    <Compile Include="MigrationExecution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
   </ItemGroup>
@@ -73,8 +85,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502182304514_InitialCreate.resx">
-      <DependentUpon>201502182304514_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="IdentityMigrations\201502191329473_InitialCreate.resx">
+      <DependentUpon>201502191329473_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IdentityMigrations\201502191441461_DefaultSchema.resx">
+      <DependentUpon>201502191441461_DefaultSchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiamiJobsFinderMigrations\201502191330181_InitialCreate.resx">
+      <DependentUpon>201502191330181_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

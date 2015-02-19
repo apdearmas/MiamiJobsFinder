@@ -6,7 +6,7 @@ namespace DAL
     {
         public IQueryable<T> FindAll()
         {
-            var context = new ApplicationDbContext();
+            var context = new MiamiJobsFinderDb();
             return context.Set<T>();
         }
     }

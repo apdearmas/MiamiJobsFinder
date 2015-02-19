@@ -2,6 +2,7 @@ using System.Web.Mvc;
 using BDL;
 using BusinessDomain;
 using DAL;
+using MiamiJobsFinder.Controllers;
 using Microsoft.Practices.Unity;
 using Unity.Mvc5;
 
@@ -29,6 +30,8 @@ namespace MiamiJobsFinder
 
     public static void RegisterTypes(IUnityContainer container)
     {
+        container.RegisterType<AccountController>(new InjectionConstructor());
+
         container.RegisterType<ISendJobOffersService, SendJobOffersService>();
         container.RegisterType<ICustomerService, CustomerService>();
         container.RegisterType<IRepository<Customer>, Repository<Customer>>();

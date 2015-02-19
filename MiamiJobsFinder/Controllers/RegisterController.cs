@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Net;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using BusinessDomain;
 using DAL;
@@ -9,7 +7,7 @@ namespace MiamiJobsFinder.Controllers
 {
     public class RegisterController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
 
        
         // GET: Register/Create

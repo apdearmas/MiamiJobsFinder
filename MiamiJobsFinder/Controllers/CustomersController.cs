@@ -9,7 +9,7 @@ namespace MiamiJobsFinder.Controllers
 {
     public class CustomersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
 
         // GET: Customers
         public async Task<ActionResult> Index()

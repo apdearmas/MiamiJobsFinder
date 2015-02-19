@@ -4,12 +4,13 @@ using System.Net;
 using System.Web.Mvc;
 using BusinessDomain;
 using DAL;
+using MiamiJobsFinder.Models;
 
 namespace MiamiJobsFinder.Controllers
 {
     public class JobOffersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
 
         // GET: JobOffers
         public async Task<ActionResult> Index()
