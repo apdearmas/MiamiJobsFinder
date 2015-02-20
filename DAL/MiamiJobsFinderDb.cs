@@ -22,5 +22,9 @@ namespace DAL
         public DbSet<JobOffer> JobOffers { get; set; }
         public DbSet<Location> Locations { get; set; }
 
+    //    public System.Data.Entity.DbSet<BusinessDomain.JobOfferListViewModel> JobOfferListViewModels { get; set; }
+
+    //    public System.Data.Entity.DbSet<BusinessDomain.JobOfferListViewModel> JobOfferListViewModels { get; set; }
+
     }
 }

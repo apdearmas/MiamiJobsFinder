@@ -78,6 +78,10 @@
     <Compile Include="MiamiJobsFinderMigrations\201502191330181_InitialCreate.Designer.cs">
       <DependentUpon>201502191330181_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiamiJobsFinderMigrations\201502192212502_AddTestData.cs" />
+    <Compile Include="MiamiJobsFinderMigrations\201502192212502_AddTestData.Designer.cs">
+      <DependentUpon>201502192212502_AddTestData.cs</DependentUpon>
+    </Compile>
     <Compile Include="MiamiJobsFinderMigrations\Configuration.cs" />
     <Compile Include="MigrationExecution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MiamiJobsFinderMigrations\201502191330181_InitialCreate.resx">
       <DependentUpon>201502191330181_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiamiJobsFinderMigrations\201502192212502_AddTestData.resx">
+      <DependentUpon>201502192212502_AddTestData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
