@@ -1,0 +1,91 @@
+﻿@*@model IEnumerable<BusinessDomain.JobOfferListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IssuedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpirationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IssuedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpirationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>*@
+
+@model IEnumerable<BusinessDomain.JobOfferListViewModel>
+
+
+@{
+    ViewBag.Title = "Job Search";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+
+
+<form method="get">
+    <input type="search" name="searchTerm" />
+    <input type="search" name="searchTerm_City_State_Zip" />
+    <input type="submit" value="Find Jobs" />
+</form>
+
+
+@*@Html.Partial("JobsSelected", Model)*@
+@*@Html.ActionLink("Test", "JobsSelected")*@
+
+@foreach (var item in Model)
+{
+    <div>
+        <h4>@item.Title</h4>
+        <div>Issue: @item.IssuedDate, Expiration: @item.ExpirationDate</div>
+        <div>City: @item.Location.City, State: @item.Location.State, ContactPerson: @item.ContactPerson.Name</div>
+        <div>
+            @item.Description
+        </div>
+
+        <hr />
+    </div>
+
+
+}
+
