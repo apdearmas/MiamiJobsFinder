@@ -37,7 +37,7 @@ namespace DAL.IdentityMigrations
                     Email = "elukse@yahoo.com",
                     EmailConfirmed = true
                 };
-                userManager.Create(user, "$1Accord2003");
+                userManager.Create(user, "password@123");
                 userManager.AddToRole(user.Id, "admin");
             }
 
