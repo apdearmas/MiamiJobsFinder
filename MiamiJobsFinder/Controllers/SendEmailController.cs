@@ -3,6 +3,7 @@ using BDL;
 
 namespace MiamiJobsFinder.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class SendEmailController : Controller
     {
         // GET: SendEmail

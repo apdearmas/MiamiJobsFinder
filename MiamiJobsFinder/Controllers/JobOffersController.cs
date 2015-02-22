@@ -8,6 +8,7 @@ using MiamiJobsFinder.Models;
 
 namespace MiamiJobsFinder.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class JobOffersController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
