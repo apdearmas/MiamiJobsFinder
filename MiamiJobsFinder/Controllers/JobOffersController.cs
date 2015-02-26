@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
@@ -49,6 +50,9 @@ namespace MiamiJobsFinder.Controllers
         {
             if (ModelState.IsValid)
             {
+                jobOffer.ContactPerson = db.ContactPersons.First();
+                jobOffer.Location = db.Locations.First();    
+
                 db.JobOffers.Add(jobOffer);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
