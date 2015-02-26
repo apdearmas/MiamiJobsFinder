@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using MiamiJobsFinder.Models;
 
 namespace MiamiJobsFinder.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class JobOffersController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
@@ -48,6 +50,9 @@ namespace MiamiJobsFinder.Controllers
         {
             if (ModelState.IsValid)
             {
+                jobOffer.ContactPerson = db.ContactPersons.First();
+                jobOffer.Location = db.Locations.First();    
+
                 db.JobOffers.Add(jobOffer);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

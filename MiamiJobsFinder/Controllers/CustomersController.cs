@@ -7,6 +7,7 @@ using DAL;
 
 namespace MiamiJobsFinder.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CustomersController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
