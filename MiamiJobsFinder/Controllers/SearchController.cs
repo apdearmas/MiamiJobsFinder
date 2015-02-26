@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace MiamiJobsFinder.Controllers
 {
@@ -13,13 +14,26 @@ namespace MiamiJobsFinder.Controllers
 
         MiamiJobsFinderDb _db = new MiamiJobsFinderDb();
 
-        // GET: Search
-        public ActionResult Index(string searchTerm = null)
+
+        public ActionResult Autocomplete(string term)
         {
-            var model = from r in _db.JobOffers
-                        where (searchTerm == null || r.Title.StartsWith(searchTerm))
-                        orderby r.IssuedDate
-                        select new JobOfferListViewModel
+            var model = _db.JobOffers
+                        .Where(r => r.Title.StartsWith(term))
+                        .Take(10)
+                        .Select(r => new
+                        {
+                            label = r.Title
+                        });
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: Search
+        public ActionResult Index(string searchTerm = null, int page = 1)
+        {
+            var model = _db.JobOffers
+                .OrderBy(r => r.IssuedDate)
+                .Where(r => searchTerm == null || r.Title.StartsWith(searchTerm))
+                .Select(r => new JobOfferListViewModel
                         {
                             Id = r.Id,
                             Title = r.Title,
@@ -29,97 +43,24 @@ namespace MiamiJobsFinder.Controllers
                             ContactPerson = r.ContactPerson,
                             Location = r.Location
 
-                        };
+                        }).ToPagedList(page, 10);
 
-            //var model = _db.JobOffers
-            //    .OrderBy(r => r.IssuedDate)
-            //    .Where(r => searchTerm == null || r.Title.StartsWith(searchTerm))
-            //    .Take(10);
-            //    //.Select (new JobOfferListViewModel
-            //{
-            //    Id = r.Id,
-            //    Title = r.Title,
-            //    IssuedDate = r.IssuedDate,
-            //    ExpirationDate= r.ExpirationDate,
-            //    Description= r.Description,
-            //    ContactPerson= r.ContactPerson,
-            //    City = (from l in _db.Locations where l.Id == r.LocationId select l.City)
-
-            //});
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_Jobs", model);
+            }
 
             return View(model);
         }
 
-        // GET: Search/Details/5
-        public ActionResult Details(int id)
+        protected override void Dispose(bool disposing)
         {
-            return View();
-        }
-
-        // GET: Search/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Search/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            if (disposing)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                _db.Dispose();
             }
-            catch
-            {
-                return View();
-            }
+            base.Dispose(disposing);
         }
 
-        // GET: Search/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Search/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Search/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Search/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

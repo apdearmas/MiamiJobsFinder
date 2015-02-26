@@ -1,0 +1,24 @@
+﻿@model IPagedList<JobOfferListViewModel>
+
+<div id="jobList">
+
+    <div class="pagedList" data-mjf-target="#jobList">
+        @Html.PagedListPager(Model, page => Url.Action("Index",  new { page }),
+        PagedListRenderOptions.MinimalWithItemCountText)
+
+
+    </div>
+    @foreach (var item in Model)
+    {
+        <div>
+            <h4>@item.Title</h4>
+            <div>Issue: @item.IssuedDate, Expiration: @item.ExpirationDate</div>
+            <div>City: @item.Location.City, State: @item.Location.State, ContactPerson: @item.ContactPerson.Name</div>
+            <div>
+                @item.Description
+            </div>
+
+            <hr />
+        </div>
+    }
+</div>

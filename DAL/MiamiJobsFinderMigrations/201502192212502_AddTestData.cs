@@ -38,6 +38,10 @@ namespace DAL.MiamiJobsFinderMigrations
 
         private void AddPredefinedJobOffers()
         {
+            Sql(string.Format("INSERT INTO JobOffers Values ('Ingeniero','01/01/2015', '01/07/2015', 'Job Offer-Ingeniero',1,1)"));
+            Sql(string.Format("INSERT INTO JobOffers Values ('Veterinario','01/01/2015', '01/07/2015', 'Job Offer-Veterinario',1,1)"));
+            Sql(string.Format("INSERT INTO JobOffers Values ('Verengenero','01/01/2015', '01/07/2015', 'Job Offer-Verengenero',1,1)"));
+            Sql(string.Format("INSERT INTO JobOffers Values ('Ingerente','01/01/2015', '01/07/2015', 'Job Offer-Ingerente',1,1)"));
             for (int i = 0; i < 1000; i++)
             {
                 Sql(string.Format("INSERT INTO JobOffers Values ('Mechanico','01/01/2015', '01/07/2015', 'Job Offer {0}',1,1)", i));
@@ -46,7 +50,7 @@ namespace DAL.MiamiJobsFinderMigrations
 
         private void UpdateJobOffers()
         {
-            Sql(string.Format("UPDATE JobOffers SET [Title] = 'Mecanico' , [Location_Id] = 1 WHERE Id BETWEEN {0} AND {1}", 1, 299));
+            Sql(string.Format("UPDATE JobOffers SET [Title] = 'Mecanico' , [Location_Id] = 1 WHERE Id BETWEEN {0} AND {1}", 5, 299));
             Sql(string.Format("UPDATE JobOffers SET [Title] = 'Doctor'   , [Location_Id] = 1 WHERE Id BETWEEN {0} AND {1}", 300, 699));
             Sql(string.Format("UPDATE JobOffers SET [Title] = 'Maestro'  , [Location_Id] = 1 WHERE Id BETWEEN {0} AND {1}", 700, 1000));
         }

@@ -1,61 +1,4 @@
-﻿@model IEnumerable<BusinessDomain.JobOfferListViewModel>
-<div class="row">
-    <div class="col-md-1">
-
-        @{
-            ViewBag.Title = "Index";
-        }
-
-        <h2>Index</h2>
-
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IssuedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ExpirationDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IssuedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ExpirationDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
-            }
-
-        </table>
-    </div>
-</div>
-
-@*@model IEnumerable<BusinessDomain.JobOfferListViewModel>
+﻿@model IPagedList<JobOfferListViewModel>
 
 
     @{
@@ -68,49 +11,13 @@
 
 
 
-    <form method="get">
-        <input type="search" name="searchTerm" />
-        <input type="search" name="searchTerm_City_State_Zip" />
+    <form method="get" action="@Url.Action("Index")"
+          data-mjf-ajax="true" data-mjf-target="#jobList">
+
+        <input type="search" name="searchTerm" data-mjf-autocomplete="@Url.Action("Autocomplete")" />
         <input type="submit" value="Find Jobs" />
     </form>
 
-
-    @foreach (var item in Model)
-    {
-        <div>
-            <h4>@item.Title</h4>
-            <div>Issue: @item.IssuedDate, Expiration: @item.ExpirationDate</div>
-            <div>City: @item.Location.City, State: @item.Location.State, ContactPerson: @item.ContactPerson.Name</div>
-            <div>
-                @item.Description
-            </div>
-
-            <hr />
-        </div>
+    @Html.Partial("_Jobs", Model)
 
 
-    }*@
-
-
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
