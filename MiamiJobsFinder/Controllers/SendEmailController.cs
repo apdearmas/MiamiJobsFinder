@@ -11,5 +11,10 @@ namespace MiamiJobsFinder.Controllers
         {
             return View();
         }
+
+        public ActionResult Send()
+        {
+            return RedirectToAction("Index");
+        }
     }
 }
