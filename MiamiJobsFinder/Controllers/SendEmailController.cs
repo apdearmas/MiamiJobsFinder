@@ -1,11 +1,19 @@
 ﻿using System.Web.Mvc;
 using BDL;
 
+
 namespace MiamiJobsFinder.Controllers
 {
     [Authorize(Roles = "admin")]
     public class SendEmailController : Controller
     {
+        private readonly ISendJobOffersService sendJobOffersService;
+
+        public SendEmailController(ISendJobOffersService sendJobOffersService)
+        {
+            this.sendJobOffersService = sendJobOffersService;
+        }
+
         // GET: SendEmail
         public ActionResult Index()
         {
@@ -14,7 +22,8 @@ namespace MiamiJobsFinder.Controllers
 
         public ActionResult Send()
         {
-            return RedirectToAction("Index");
+            sendJobOffersService.SendJobOffers();
+            return RedirectToAction("Index", "Home" );
         }
     }
 }

@@ -1,15 +1,16 @@
-using System.Linq;
+using System.Collections.Generic;
+using BusinessDomain;
 
 namespace BDL
 {
     
     public class SendJobOffersService : ISendJobOffersService
     {
-        private ICustomerService customerService;
-        private IJobOffersService jobOffersService;
-        private IEmailService emailService;
+        private readonly ICustomerService customerService;
+        private readonly IJobOffersService jobOffersService;
+        private readonly IEmailService emailService;
 
-        private string subject = "Ofertas de Trabajo";
+        private const string Subject = "Ofertas de Trabajo";
         public string Message = string.Empty;
        
       
@@ -30,21 +31,18 @@ namespace BDL
 
             foreach (var customer in customers)
             {
-                emailService.Send(customer.EMail, subject, this.Message);
+                emailService.Send(customer.EMail, Subject, Message);
             }
         }
 
-        private string CreateEmailMessage(IQueryable<BusinessDomain.JobOffer> jobOffers)
+        private void CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
         {
-            if (jobOffers == null) return string.Empty;
+            if (jobOffers == null) return;
 
             foreach (var jobOffer in jobOffers)
             {
                 Message = Message + jobOffer.Description + System.Environment.NewLine; 
             }
-            return this.Message;
         }
-
-        
     }
 }

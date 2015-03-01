@@ -1,21 +1,18 @@
-﻿using System.Net.Mail;
-using System.Net;
-
-namespace BDL
+﻿namespace BDL
 {
     public class EmailService : IEmailService
     {
-        public ISmtpClientWrapper smtpClientWrapper;
+        public ISmtpClientWrapper SmtpClientWrapper;
 
         public EmailService(ISmtpClientWrapper smtpClientWrapper)
         {
-            this.smtpClientWrapper = smtpClientWrapper;
+            SmtpClientWrapper = smtpClientWrapper;
         }
                 
 
         public void Send(string targetEmail, string subject, string message)
         {
-            smtpClientWrapper.Send(targetEmail, subject, message);
+            SmtpClientWrapper.Send(targetEmail, subject, message);
         }
         
     }
