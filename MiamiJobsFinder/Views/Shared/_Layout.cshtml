@@ -25,6 +25,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Search", "Index", "Search")</li>
                     <li>@Html.ActionLink("Register", "Create", "Register")</li>
+
                     @if (User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
