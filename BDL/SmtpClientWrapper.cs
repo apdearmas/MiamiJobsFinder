@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
 using System.Net.Mail;
 using SendGrid;
 
@@ -22,13 +23,23 @@ namespace BDL
             myMessage.Subject = subject;
             myMessage.Text = message;
 
+            //            using (var attachmentFileStream = new FileStream(@"C:\dev\Giraffas.pdf", FileMode.Open))
+            //            {
+            //                myMessage.AddAttachment(attachmentFileStream, "Giraffas.pdf");
+            //            }
+            //            using (var attachmentFileStream = new FileStream(@"C:\dev\lasership.pdf", FileMode.Open))
+            //            {
+            //                myMessage.AddAttachment(attachmentFileStream, "lasership.pdf");
+            //            }
+
             // Create an Web transport for sending email.
             var transportWeb = new Web(credentials);
 
             // Send the email.
             transportWeb.Deliver(myMessage);
-   
+
         }
     }
 }
 
+//Giraffas
