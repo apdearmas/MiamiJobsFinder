@@ -21,7 +21,7 @@ namespace BDL
             myMessage.AddTo(targetEmail);
             myMessage.From = new MailAddress("apdearmas@sendgrid.com", "Antonio Pereira");
             myMessage.Subject = subject;
-            myMessage.Text = message;
+            myMessage.Html = message;
 
             //            using (var attachmentFileStream = new FileStream(@"C:\dev\Giraffas.pdf", FileMode.Open))
             //            {
@@ -42,4 +42,3 @@ namespace BDL
     }
 }
 
-//Giraffas
