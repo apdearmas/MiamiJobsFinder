@@ -38,7 +38,8 @@
             @Html.DisplayFor(modelItem => item.ExpirationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @*@Html.DisplayFor(modelItem => item.Description)*@
+            @Html.Raw(item.Description)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

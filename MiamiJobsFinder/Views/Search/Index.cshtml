@@ -10,8 +10,8 @@
     <form method="get" action="@Url.Action("Index")"
           data-mjf-ajax="true" data-mjf-target="#jobList">
 
-        <input type="search" name="searchTerm" data-mjf-autocomplete="@Url.Action("Autocomplete")" />
-        <input type="submit" value="Find Jobs" />
+        <input type="search" name="searchTerm" class=" input-lg" data-mjf-autocomplete="@Url.Action("Autocomplete")" />
+        <input type="submit" value="Find Jobs" class="btn btn-default" />
     </form>
 
     @Html.Partial("_Jobs", Model)
