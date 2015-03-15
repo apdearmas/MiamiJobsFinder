@@ -8,6 +8,8 @@ namespace BusinessDomain
  
     public class JobOffer
     {
+        const int DAYSPAN = 30;
+
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime IssuedDate { get; set; }
@@ -19,7 +21,6 @@ namespace BusinessDomain
         public ContactPerson ContactPerson { get; set; }
         public Location Location { get; set; }
 
-        const int DAYSPAN = 30;
         
         public JobOffer()
         {
