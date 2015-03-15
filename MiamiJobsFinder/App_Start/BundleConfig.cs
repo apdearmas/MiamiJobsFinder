@@ -13,6 +13,8 @@ namespace MiamiJobsFinder
                         "~/Scripts/jquery-ui-{version}.js",
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*",
+                        //"~/Scripts/tinymce/tinymce.min.js",
+                        //"~/Scripts/tinymce.js",
                         "~/Scripts/mjf.js"
                         ));
 

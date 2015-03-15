@@ -14,12 +14,17 @@ namespace BusinessDomain
         public DateTime ExpirationDate { get; set; }
 
         [AllowHtml]
-        [UIHint("tinymce_full_compressed")]
+        [UIHint("tinymce_full")]
         public string Description { get; set; }
         public ContactPerson ContactPerson { get; set; }
         public Location Location { get; set; }
 
+        const int DAYSPAN = 30;
         
-        
+        public JobOffer()
+        {
+            this.IssuedDate = DateTime.Now;
+            this.ExpirationDate = IssuedDate.AddDays(DAYSPAN);
+        }
     }
 }
