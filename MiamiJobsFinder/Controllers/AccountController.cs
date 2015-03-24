@@ -12,7 +12,7 @@ using MiamiJobsFinder.Models;
 namespace MiamiJobsFinder.Controllers
 {
     [Authorize]
-    [DisplayName("Account")]
+    [DisplayName("Log in")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
