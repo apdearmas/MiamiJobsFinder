@@ -6,9 +6,9 @@
         @Html.AntiForgeryToken()
 
 
-    <ul class="nav navbar-nav navbar-right ">
-        <li><a href="javascript:document.getElementById('logoutForm').submit()"><span style="color:whitesmoke">Log off @User.Identity.GetUserName()</span> </a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right ">
+            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span style="color:whitesmoke">Log off @User.Identity.GetUserName()</span> </a></li>
+        </ul>
     }
 }
 else
