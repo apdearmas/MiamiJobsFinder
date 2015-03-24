@@ -1,10 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System.ComponentModel;
+using System.Web.Mvc;
 using BDL;
 
 
 namespace MiamiJobsFinder.Controllers
 {
     [Authorize(Roles = "admin")]
+    [DisplayName("Send e-mails")]
     public class SendEmailController : Controller
     {
         private readonly ISendJobOffersService sendJobOffersService;

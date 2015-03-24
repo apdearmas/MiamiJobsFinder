@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +12,7 @@ using MiamiJobsFinder.Models;
 namespace MiamiJobsFinder.Controllers
 {
     [Authorize]
+    [DisplayName("Account")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using BusinessDomain;
 using DAL;
 
 namespace MiamiJobsFinder.Controllers
 {
+    [DisplayName("Register")]
     public class RegisterController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();

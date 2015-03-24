@@ -1,4 +1,5 @@
-﻿using BusinessDomain;
+﻿using System.ComponentModel;
+using BusinessDomain;
 using DAL;
 using System.Linq;
 using System.Web.Mvc;
@@ -6,6 +7,7 @@ using PagedList;
 
 namespace MiamiJobsFinder.Controllers
 {
+    [DisplayName("Search")]
     public class SearchController : Controller
     {
 

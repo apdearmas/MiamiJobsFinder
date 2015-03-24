@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.ComponentModel;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using BusinessDomain;
 using DAL;
-using MiamiJobsFinder.Models;
 
 namespace MiamiJobsFinder.Controllers
 {
     [Authorize(Roles = "admin")]
+    [DisplayName("Locations")]
     public class LocationsController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using DAL;
 namespace MiamiJobsFinder.Controllers
 {
     [Authorize(Roles = "admin")]
+    [DisplayName("Customers")]
     public class CustomersController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();

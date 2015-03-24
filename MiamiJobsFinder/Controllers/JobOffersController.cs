@@ -1,8 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using BusinessDomain;
 using DAL;
 using MiamiJobsFinder.Models;
@@ -10,6 +12,7 @@ using MiamiJobsFinder.Models;
 namespace MiamiJobsFinder.Controllers
 {
     [Authorize(Roles = "admin")]
+    [DisplayName("Job offers") ]
     public class JobOffersController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();

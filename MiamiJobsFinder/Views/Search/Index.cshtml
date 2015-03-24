@@ -1,19 +1,15 @@
 ﻿@model IPagedList<JobOfferListViewModel>
 @{
-    ViewBag.Title = "Job Search";
+    ViewBag.Title = "Search";
 }
 
-    <hgroup class="title">
-        <h1>@ViewBag.Title</h1>
-    </hgroup>
+<form method="get" action="@Url.Action("Index")"
+        data-mjf-ajax="true" data-mjf-target="#jobList">
 
-    <form method="get" action="@Url.Action("Index")"
-          data-mjf-ajax="true" data-mjf-target="#jobList">
+    <input type="search" name="searchTerm" class=" input-lg" data-mjf-autocomplete="@Url.Action("Autocomplete")" />
+    <input type="submit" value="Find Jobs" class="btn btn-default" />
+</form>
 
-        <input type="search" name="searchTerm" class=" input-lg" data-mjf-autocomplete="@Url.Action("Autocomplete")" />
-        <input type="submit" value="Find Jobs" class="btn btn-default" />
-    </form>
-
-    @Html.Partial("_Jobs", Model)
+@Html.Partial("_Jobs", Model)
 
 
