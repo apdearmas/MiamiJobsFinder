@@ -17,9 +17,31 @@
     white-space: normal;
 }
 
+/*F.G to size Search input after allowing 100% for input width on the form*/
+#enterjobtitle{
+    padding: 15px;
+    
+    max-width: 100%;
+    width: 500px;
+    
+}
+
+
+
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
+    
 }
+
+
+ul.ui-autocomplete {
+    list-style: none;
+    list-style-type: none;
+    padding: 10px;
+    margin: 0px;
+}
+
