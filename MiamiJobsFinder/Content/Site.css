@@ -19,7 +19,7 @@
 
 /*F.G to size Search input after allowing 100% for input width on the form*/
 #enterjobtitle{
-    padding: 15px;
+    
     
     max-width: 100%;
     width: 500px;
