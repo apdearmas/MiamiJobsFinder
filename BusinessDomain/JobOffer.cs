@@ -20,6 +20,8 @@ namespace BusinessDomain
         public string Description { get; set; }
         public ContactPerson ContactPerson { get; set; }
         public Location Location { get; set; }
+        
+        public string JobOfferURL { get; set; }
 
         
         public JobOffer()
