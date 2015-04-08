@@ -1,33 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
+﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure;
 using System.IO;
 
 namespace BDL
 {
-    public interface IAzureStorageService
-    {
-        string UploadBlob(string fileName, string filePath);
-        void DeleteBlob(string fileName);
-    }
-
     public class AzureStorageService : IAzureStorageService
     {
-
-        private CloudStorageAccount cloudStorageAccount;
-        private CloudBlobContainer cloudBlobContainer;
+        private readonly CloudBlobContainer cloudBlobContainer;
 
         public AzureStorageService()
         {
             // Retrieve storage account from connection string.
-            cloudStorageAccount = CloudStorageAccount.Parse(
-                            CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(
+            CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
             // Create the blob client.
             CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
@@ -59,7 +45,7 @@ namespace BDL
 
             blockBlob.Properties.ContentType = "application/pdf";
 
-            using (var fileStream = System.IO.File.OpenRead(targetFile))
+            using (var fileStream = File.OpenRead(targetFile))
             {
                 blockBlob.UploadFromStream(fileStream);
             }

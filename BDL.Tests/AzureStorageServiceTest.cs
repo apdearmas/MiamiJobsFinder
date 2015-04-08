@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Moq;
-using Xunit;
+﻿using Xunit;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 
@@ -15,7 +8,7 @@ namespace BDL.Tests
 
     class AzureStorageServiceTest
     {
-        private  AzureStorageService storageService;
+        private readonly AzureStorageService storageService;
 
         public AzureStorageServiceTest()
         {
@@ -41,9 +34,6 @@ namespace BDL.Tests
             //accessKey = this.storageService.accessKey;
             //assert
             Assert.IsNotNull(accountName);
-            Assert.IsNotNull(accessKey);
-
-
         }
 
     }
