@@ -7,13 +7,13 @@ namespace DAL.MiamiJobsFinderMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class AddJobOfferURL : IMigrationMetadata
+    public sealed partial class ChangeJobOfferURLToJobOfferFileName : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddJobOfferURL));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeJobOfferURLToJobOfferFileName));
         
         string IMigrationMetadata.Id
         {
-            get { return "201504062358248_AddJobOfferURL"; }
+            get { return "201504131648495_ChangeJobOfferURLToJobOfferFileName"; }
         }
         
         string IMigrationMetadata.Source

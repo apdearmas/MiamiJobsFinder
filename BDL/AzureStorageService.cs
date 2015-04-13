@@ -5,22 +5,34 @@ using System.IO;
 
 namespace BDL
 {
-    public class AzureStorageService : IAzureStorageService
+    public class AzureStorageService 
     {
-        private readonly CloudBlobContainer cloudBlobContainer;
+        private readonly IAzureStorageService cloudStorageService;
 
-        public AzureStorageService()
+        public CloudStorageAccount cloudStorageAccount;
+        public CloudBlobClient cloudBlobClient;
+        public CloudBlobContainer cloudBlobContainer;
+
+        public AzureStorageService(IAzureStorageService storageService )
         {
+            this.cloudStorageService = storageService;
+
+            this.cloudStorageAccount = storageService.cloudStorageAccount;
+            this.cloudBlobClient = storageService.cloudBlobClient;
+            this.cloudBlobContainer = storageService.cloudBlobContainer;
+        }
+        
+        public void InitCloudStorage(){
             // Retrieve storage account from connection string.
-            CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(
+            cloudStorageAccount = CloudStorageAccount.Parse(
             CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
             // Create the blob client.
-            CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobClient cloudBlobClient  = cloudStorageAccount.CreateCloudBlobClient();
 
 
             // Retrieve a reference to a container. 
-            cloudBlobContainer = blobClient.GetContainerReference("test");
+            cloudBlobContainer = cloudBlobClient.GetContainerReference("test");
 
             // Create the container if it doesn't already exist.
             if (cloudBlobContainer.CreateIfNotExists())
@@ -35,7 +47,9 @@ namespace BDL
 
             //UploadBlob("PAP201500222600201.pdf", "C:\\Users\\Lenovo\\Documents\\Frank\\INSPECTIONS\\4_2_15");
             //DeleteBlob("PAP201500222600201.pdf");
+
         }
+            
 
         public string UploadBlob(string fileName, string filePath)
         {

@@ -82,9 +82,13 @@
     <Compile Include="MiamiJobsFinderMigrations\201502192212502_AddTestData.Designer.cs">
       <DependentUpon>201502192212502_AddTestData.cs</DependentUpon>
     </Compile>
-    <Compile Include="MiamiJobsFinderMigrations\201504062358248_AddJobOfferURL.cs" />
-    <Compile Include="MiamiJobsFinderMigrations\201504062358248_AddJobOfferURL.Designer.cs">
-      <DependentUpon>201504062358248_AddJobOfferURL.cs</DependentUpon>
+    <Compile Include="MiamiJobsFinderMigrations\201504131645164_AddJobOfferURL.cs" />
+    <Compile Include="MiamiJobsFinderMigrations\201504131645164_AddJobOfferURL.Designer.cs">
+      <DependentUpon>201504131645164_AddJobOfferURL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiamiJobsFinderMigrations\201504131648495_ChangeJobOfferURLToJobOfferFileName.cs" />
+    <Compile Include="MiamiJobsFinderMigrations\201504131648495_ChangeJobOfferURLToJobOfferFileName.Designer.cs">
+      <DependentUpon>201504131648495_ChangeJobOfferURLToJobOfferFileName.cs</DependentUpon>
     </Compile>
     <Compile Include="MiamiJobsFinderMigrations\Configuration.cs" />
     <Compile Include="MigrationExecution.cs" />
@@ -114,8 +118,11 @@
     <EmbeddedResource Include="MiamiJobsFinderMigrations\201502192212502_AddTestData.resx">
       <DependentUpon>201502192212502_AddTestData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiamiJobsFinderMigrations\201504062358248_AddJobOfferURL.resx">
-      <DependentUpon>201504062358248_AddJobOfferURL.cs</DependentUpon>
+    <EmbeddedResource Include="MiamiJobsFinderMigrations\201504131645164_AddJobOfferURL.resx">
+      <DependentUpon>201504131645164_AddJobOfferURL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiamiJobsFinderMigrations\201504131648495_ChangeJobOfferURLToJobOfferFileName.resx">
+      <DependentUpon>201504131648495_ChangeJobOfferURLToJobOfferFileName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

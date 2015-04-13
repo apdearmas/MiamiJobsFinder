@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Moq;
+using Xunit;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 
@@ -8,16 +9,26 @@ namespace BDL.Tests
 
     class AzureStorageServiceTest
     {
-        private readonly AzureStorageService storageService;
+        //private readonly AzureStorageService storageService;
+        private Mock<IAzureStorageService> storageServiceMock;
+        private AzureStorageService storageService;
+
 
         public AzureStorageServiceTest()
         {
-            storageService = new AzureStorageService();
+           
         }
 
         [Fact]
         public void CreateStorageService() 
         {   
+            //arrange
+            storageServiceMock = new Mock<IAzureStorageService>();
+
+            //act
+            storageService = new AzureStorageService(storageServiceMock.Object);
+            
+            //assert
             Assert.IsNotNull(storageService);
         }     
 
@@ -25,15 +36,29 @@ namespace BDL.Tests
         public void VerifyAzureStorageAutentication()
         {
             //arrange
-            string accountName = null;
-            string accessKey = null;
-            
+            storageServiceMock = new Mock<IAzureStorageService>();
 
             //act
-            //accountName = this.storageService.accountName;
-            //accessKey = this.storageService.accessKey;
+            storageService = new AzureStorageService(storageServiceMock.Object);
+            storageService.InitCloudStorage();
+
             //assert
-            Assert.IsNotNull(accountName);
+            Assert.IsNotNull(storageService.cloudStorageAccount);
+            Assert.IsNotNull(storageService.cloudBlobClient);
+            Assert.IsNotNull(storageService.cloudBlobContainer);
+        }
+
+        [Fact]
+        public void VerifyUploadBlobIsCallWithValidParameters()
+        {
+            //arrange
+            storageServiceMock = new Mock<IAzureStorageService>();
+
+            //act
+            storageService = new AzureStorageService(storageServiceMock.Object);
+            storageService.InitCloudStorage();
+            //assert
+
         }
 
     }
