@@ -1,38 +1,47 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure;
 using System.IO;
 
 namespace BDL
 {
-    public class AzureStorageService 
+
+    public interface ICloudStorageAccountWrapper
     {
-        private readonly IAzureStorageService cloudStorageService;
+        CloudStorageAccount Parse(string connectionString);
+    }
 
-        public CloudStorageAccount cloudStorageAccount;
-        public CloudBlobClient cloudBlobClient;
-        public CloudBlobContainer cloudBlobContainer;
+    public class CloudStorageAccountWrapper : ICloudStorageAccountWrapper
+    {
 
-        public AzureStorageService(IAzureStorageService storageService )
+        public CloudStorageAccount Parse(string connectionString)
         {
-            this.cloudStorageService = storageService;
-
-            this.cloudStorageAccount = storageService.cloudStorageAccount;
-            this.cloudBlobClient = storageService.cloudBlobClient;
-            this.cloudBlobContainer = storageService.cloudBlobContainer;
+            return CloudStorageAccount.Parse(connectionString);
         }
-        
-        public void InitCloudStorage(){
+    }
+
+    public class AzureStorageService : IAzureStorageService
+    {
+        private CloudStorageAccount cloudStorageAccount { get; set; }
+        private CloudBlobClient cloudBlobClient { get; set; }
+        private CloudBlobContainer cloudBlobContainer { get; set; }
+
+        private ICloudStorageAccountWrapper cloudStorageAccountWrapper;
+
+        public AzureStorageService(ICloudStorageAccountWrapper cloudStorageAccountWrapper)
+        {
+            this.cloudStorageAccountWrapper = cloudStorageAccountWrapper;
+
             // Retrieve storage account from connection string.
-            cloudStorageAccount = CloudStorageAccount.Parse(
-            CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            cloudStorageAccount = cloudStorageAccountWrapper.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
             // Create the blob client.
-            CloudBlobClient cloudBlobClient  = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
 
 
             // Retrieve a reference to a container. 
-            cloudBlobContainer = cloudBlobClient.GetContainerReference("test");
+            cloudBlobContainer = cloudBlobClient.GetContainerReference("MJFContainer");
 
             // Create the container if it doesn't already exist.
             if (cloudBlobContainer.CreateIfNotExists())
@@ -48,14 +57,15 @@ namespace BDL
             //UploadBlob("PAP201500222600201.pdf", "C:\\Users\\Lenovo\\Documents\\Frank\\INSPECTIONS\\4_2_15");
             //DeleteBlob("PAP201500222600201.pdf");
 
+
+
         }
-            
 
         public string UploadBlob(string fileName, string filePath)
         {
             CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(fileName);
 
-            string targetFile =  Path.Combine(filePath,fileName);
+            string targetFile = Path.Combine(filePath, fileName);
 
             blockBlob.Properties.ContentType = "application/pdf";
 

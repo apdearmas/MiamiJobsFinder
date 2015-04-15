@@ -9,57 +9,60 @@ namespace BDL.Tests
 
     class AzureStorageServiceTest
     {
-        //private readonly AzureStorageService storageService;
-        private Mock<IAzureStorageService> storageServiceMock;
         private AzureStorageService storageService;
 
-
+        private Mock<ICloudStorageAccountWrapper> cloudStorageAccountWrapperMock;
         public AzureStorageServiceTest()
         {
-           
+            cloudStorageAccountWrapperMock = new Mock<ICloudStorageAccountWrapper>();
         }
 
         [Fact]
-        public void CreateStorageService() 
-        {   
+        public void CreateStorageService()
+        {
             //arrange
-            storageServiceMock = new Mock<IAzureStorageService>();
 
             //act
-            storageService = new AzureStorageService(storageServiceMock.Object);
-            
+            storageService = new AzureStorageService(cloudStorageAccountWrapperMock.Object);
+
             //assert
             Assert.IsNotNull(storageService);
-        }     
-
-        [Fact]
-        public void VerifyAzureStorageAutentication()
-        {
-            //arrange
-            storageServiceMock = new Mock<IAzureStorageService>();
-
-            //act
-            storageService = new AzureStorageService(storageServiceMock.Object);
-            storageService.InitCloudStorage();
-
-            //assert
-            Assert.IsNotNull(storageService.cloudStorageAccount);
-            Assert.IsNotNull(storageService.cloudBlobClient);
-            Assert.IsNotNull(storageService.cloudBlobContainer);
         }
 
-        [Fact]
-        public void VerifyUploadBlobIsCallWithValidParameters()
-        {
-            //arrange
-            storageServiceMock = new Mock<IAzureStorageService>();
 
-            //act
-            storageService = new AzureStorageService(storageServiceMock.Object);
-            storageService.InitCloudStorage();
-            //assert
+        //[Fact]
+        //public void VerifyUploadBlobIsCalledWithValidParameters()
+        //{
+        //    //arrange
+        //    string fileName="xFileName";
+        //    string path = "c:\a\b";
 
-        }
+        //    //act
+        //    storageServiceMock.Setup(m => m.UploadBlob(It.IsAny<string>(), It.IsAny<string>())).Verifiable();
+        //    storageService = new AzureStorageService(storageServiceMock.Object);
+        //    storageService.InitCloudStorage();
+        //    storageService.UploadBlob(fileName, path);
+
+        //    //assert
+        //    storageServiceMock.Verify(m=>m.UploadBlob(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+        //}
+
+        //[Fact]
+        //public void VerifyDeleteBlobIsCalledWithValidParameters()
+        //{
+        //    //arrange
+        //    storageServiceMock = new Mock<IAzureStorageService>();
+        //    string fileName = "xFileName";
+
+        //    //act
+        //    storageServiceMock.Setup(m => m.DeleteBlob(It.IsAny<string>())).Verifiable();
+        //    storageService = new AzureStorageService(storageServiceMock.Object);
+        //    storageService.InitCloudStorage();
+        //    storageService.DeleteBlob(fileName);
+
+        //    //assert
+        //    storageServiceMock.Verify(m => m.DeleteBlob(It.IsAny<string>()), Times.Once());
+        //}
 
     }
 }
