@@ -1,13 +1,15 @@
-﻿using Moq;
+﻿
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Moq;
 using Xunit;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-
 
 
 namespace BDL.Tests
 {
 
-    class AzureStorageServiceTest
+    public class AzureStorageServiceTest
     {
         private AzureStorageService storageService;
 
@@ -21,6 +23,9 @@ namespace BDL.Tests
         public void CreateStorageService()
         {
             //arrange
+            var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(), false);
+            cloudStorageAccountWrapperMock.Setup(m => m.Parse(It.IsAny<string>()))
+                .Returns(cloudStorageAccount);
 
             //act
             storageService = new AzureStorageService(cloudStorageAccountWrapperMock.Object);

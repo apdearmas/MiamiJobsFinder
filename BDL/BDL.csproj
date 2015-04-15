@@ -72,9 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureStorageService.cs" />
+    <Compile Include="CloudStorageAccountWrapper.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="IAzureStorageService.cs" />
+    <Compile Include="ICloudStorageAccountWrapper.cs" />
     <Compile Include="ICustomerService.cs" />
     <Compile Include="IEmailService.cs" />
     <Compile Include="IJobOffersService.cs" />

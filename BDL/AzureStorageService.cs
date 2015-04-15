@@ -6,21 +6,6 @@ using System.IO;
 
 namespace BDL
 {
-
-    public interface ICloudStorageAccountWrapper
-    {
-        CloudStorageAccount Parse(string connectionString);
-    }
-
-    public class CloudStorageAccountWrapper : ICloudStorageAccountWrapper
-    {
-
-        public CloudStorageAccount Parse(string connectionString)
-        {
-            return CloudStorageAccount.Parse(connectionString);
-        }
-    }
-
     public class AzureStorageService : IAzureStorageService
     {
         private CloudStorageAccount cloudStorageAccount { get; set; }
@@ -31,8 +16,6 @@ namespace BDL
 
         public AzureStorageService(ICloudStorageAccountWrapper cloudStorageAccountWrapper)
         {
-            this.cloudStorageAccountWrapper = cloudStorageAccountWrapper;
-
             // Retrieve storage account from connection string.
             cloudStorageAccount = cloudStorageAccountWrapper.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
