@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.WebPages;
+using BDL;
 using BusinessDomain;
 using DAL;
-using MiamiJobsFinder.Models;
+using Microsoft.Ajax.Utilities;
+using Microsoft.Practices.Unity;
 
 namespace MiamiJobsFinder.Controllers
 {
@@ -16,7 +17,14 @@ namespace MiamiJobsFinder.Controllers
     public class JobOffersController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
+        private AzureStorageService azureStorageService;
 
+        public JobOffersController()
+        {
+            azureStorageService = new AzureStorageService();
+        }
+
+        
         // GET: JobOffers
         public async Task<ActionResult> Index()
         {
@@ -54,7 +62,14 @@ namespace MiamiJobsFinder.Controllers
             if (ModelState.IsValid)
             {
                 jobOffer.ContactPerson = db.ContactPersons.First();
-                jobOffer.Location = db.Locations.First();    
+                jobOffer.Location = db.Locations.First();
+
+                const string filename = "Job Fair CareerExchange.pdf";
+                const string path = "D:\\dev\\MiamiJobsFinder\\SampleData";
+                
+                jobOffer.JobOfferFileName = filename;
+
+                azureStorageService.UploadBlob(filename, path);
 
                 db.JobOffers.Add(jobOffer);
                 await db.SaveChangesAsync();
@@ -116,7 +131,11 @@ namespace MiamiJobsFinder.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             JobOffer jobOffer = await db.JobOffers.FindAsync(id);
+
+            azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
+            
             db.JobOffers.Remove(jobOffer);
+
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

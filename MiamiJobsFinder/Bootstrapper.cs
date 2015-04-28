@@ -10,6 +10,7 @@ namespace MiamiJobsFinder
 {
   public static class Bootstrapper
   {
+
     public static IUnityContainer Initialise()
     {
       var container = BuildUnityContainer();

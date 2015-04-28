@@ -8,29 +8,26 @@ namespace BDL
 {
     public class AzureStorageService : IAzureStorageService
     {
-        private CloudStorageAccount cloudStorageAccount { get; set; }
-        private CloudBlobClient cloudBlobClient { get; set; }
-        private CloudBlobContainer cloudBlobContainer { get; set; }
+        private CloudStorageAccount CloudStorageAccount { get; set; }
+        private CloudBlobContainer CloudBlobContainer { get; set; }
 
-        private ICloudStorageAccountWrapper cloudStorageAccountWrapper;
-
-        public AzureStorageService(ICloudStorageAccountWrapper cloudStorageAccountWrapper)
+        public AzureStorageService()
         {
             // Retrieve storage account from connection string.
-            cloudStorageAccount = cloudStorageAccountWrapper.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudStorageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
             // Create the blob client.
-            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobClient cloudBlobClient = CloudStorageAccount.CreateCloudBlobClient();
 
 
             // Retrieve a reference to a container. 
-            cloudBlobContainer = cloudBlobClient.GetContainerReference("MJFContainer");
+            CloudBlobContainer = cloudBlobClient.GetContainerReference("mjfcontainer");
 
             // Create the container if it doesn't already exist.
-            if (cloudBlobContainer.CreateIfNotExists())
+            if (CloudBlobContainer.CreateIfNotExists())
             {
                 //Public access to container
-                cloudBlobContainer.SetPermissions(new BlobContainerPermissions
+                CloudBlobContainer.SetPermissions(new BlobContainerPermissions
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 });
@@ -40,13 +37,11 @@ namespace BDL
             //UploadBlob("PAP201500222600201.pdf", "C:\\Users\\Lenovo\\Documents\\Frank\\INSPECTIONS\\4_2_15");
             //DeleteBlob("PAP201500222600201.pdf");
 
-
-
         }
 
         public string UploadBlob(string fileName, string filePath)
         {
-            CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(fileName);
+            CloudBlockBlob blockBlob = CloudBlobContainer.GetBlockBlobReference(fileName);
 
             string targetFile = Path.Combine(filePath, fileName);
 
@@ -63,7 +58,7 @@ namespace BDL
         public void DeleteBlob(string fileName)
         {
 
-            CloudBlockBlob blockBlob = cloudBlobContainer.GetBlockBlobReference(fileName);
+            CloudBlockBlob blockBlob = CloudBlobContainer.GetBlockBlobReference(fileName);
             blockBlob.Delete();
         }
     }
