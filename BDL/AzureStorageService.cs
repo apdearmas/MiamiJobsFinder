@@ -1,4 +1,5 @@
 ﻿
+using System.Web;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure;
@@ -32,28 +33,20 @@ namespace BDL
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 });
             }
-
-
-            //UploadBlob("PAP201500222600201.pdf", "C:\\Users\\Lenovo\\Documents\\Frank\\INSPECTIONS\\4_2_15");
-            //DeleteBlob("PAP201500222600201.pdf");
-
         }
 
-        public string UploadBlob(string fileName, string filePath)
+        public string UploadBlob(HttpPostedFileBase jobOfferFileName)
         {
-            CloudBlockBlob blockBlob = CloudBlobContainer.GetBlockBlobReference(fileName);
+            CloudBlockBlob blockBlob = CloudBlobContainer.GetBlockBlobReference(jobOfferFileName.FileName);
 
-            string targetFile = Path.Combine(filePath, fileName);
+            blockBlob.Properties.ContentType = jobOfferFileName.ContentType;
 
-            blockBlob.Properties.ContentType = "application/pdf";
-
-            using (var fileStream = File.OpenRead(targetFile))
-            {
-                blockBlob.UploadFromStream(fileStream);
-            }
+            blockBlob.UploadFromStream(jobOfferFileName.InputStream);
 
             return blockBlob.Uri.ToString();
         }
+
+        
 
         public void DeleteBlob(string fileName)
         {

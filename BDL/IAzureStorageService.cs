@@ -1,9 +1,12 @@
-﻿namespace BDL
+﻿using System.Web;
+
+namespace BDL
 {
     public interface IAzureStorageService
     {
 
-        string UploadBlob(string fileName, string filePath);
+        string UploadBlob(HttpPostedFileBase jobOfferFileName);
+
         void DeleteBlob(string fileName);
     }
 }

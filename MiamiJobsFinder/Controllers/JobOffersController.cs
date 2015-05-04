@@ -3,12 +3,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using BDL;
 using BusinessDomain;
 using DAL;
-using Microsoft.Ajax.Utilities;
-using Microsoft.Practices.Unity;
 
 namespace MiamiJobsFinder.Controllers
 {
@@ -17,7 +16,8 @@ namespace MiamiJobsFinder.Controllers
     public class JobOffersController : Controller
     {
         private MiamiJobsFinderDb db = new MiamiJobsFinderDb();
-        private AzureStorageService azureStorageService;
+        private readonly AzureStorageService azureStorageService;
+
 
         public JobOffersController()
         {
@@ -57,19 +57,19 @@ namespace MiamiJobsFinder.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description")] JobOffer jobOffer)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description")] JobOffer jobOffer, HttpPostedFileBase jobOfferFileName)
         {
             if (ModelState.IsValid)
             {
                 jobOffer.ContactPerson = db.ContactPersons.First();
                 jobOffer.Location = db.Locations.First();
 
-                const string filename = "Job Fair CareerExchange.pdf";
-                const string path = "D:\\dev\\MiamiJobsFinder\\SampleData";
-                
-                jobOffer.JobOfferFileName = filename;
 
-                azureStorageService.UploadBlob(filename, path);
+                if (jobOfferFileName != null)
+                {
+                    jobOffer.JobOfferFileName = jobOfferFileName.FileName;
+                    azureStorageService.UploadBlob(jobOfferFileName);
+                }
 
                 db.JobOffers.Add(jobOffer);
                 await db.SaveChangesAsync();
@@ -132,8 +132,11 @@ namespace MiamiJobsFinder.Controllers
         {
             JobOffer jobOffer = await db.JobOffers.FindAsync(id);
 
-            azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
-            
+            if (jobOffer.JobOfferFileName != null)
+            {
+                azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
+            }
+
             db.JobOffers.Remove(jobOffer);
 
             await db.SaveChangesAsync();
