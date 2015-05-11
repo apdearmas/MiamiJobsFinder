@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -67,8 +68,9 @@ namespace MiamiJobsFinder.Controllers
 
                 if (jobOfferFileName != null)
                 {
-                    jobOffer.JobOfferFileName = jobOfferFileName.FileName;
-                    azureStorageService.UploadBlob(jobOfferFileName);
+                    var filename = Path.GetFileName(jobOfferFileName.FileName);
+                    jobOffer.JobOfferFileName = filename;
+                    azureStorageService.UploadBlob(filename, jobOfferFileName.ContentType, jobOfferFileName.InputStream);
                 }
 
                 db.JobOffers.Add(jobOffer);

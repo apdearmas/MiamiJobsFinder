@@ -35,13 +35,13 @@ namespace BDL
             }
         }
 
-        public string UploadBlob(HttpPostedFileBase jobOfferFileName)
+        public string UploadBlob(string filename, string contentType, Stream content)
         {
-            CloudBlockBlob blockBlob = CloudBlobContainer.GetBlockBlobReference(jobOfferFileName.FileName);
+            CloudBlockBlob blockBlob = CloudBlobContainer.GetBlockBlobReference(filename);
 
-            blockBlob.Properties.ContentType = jobOfferFileName.ContentType;
+            blockBlob.Properties.ContentType = contentType;
 
-            blockBlob.UploadFromStream(jobOfferFileName.InputStream);
+            blockBlob.UploadFromStream(content);
 
             return blockBlob.Uri.ToString();
         }
