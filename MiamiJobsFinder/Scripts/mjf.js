@@ -63,6 +63,17 @@ $(function () {
 
     $(".body-content").on("click", ".pagedList a", getPage);
 
+    //var updateFileValue = function (file) {
+    //    //document.getElementById("jobOfferFileNameID").valtextContent = "pepito";
+    //    $('#jobOfferFileNameID').val(file);
+    //    //document.getElementById("jobOfferFileNameID").innerHTML = "autocomplete is now 'off'.";
+    //}
+
+    //$("jobOfferFileName").on("change",updateFileValue(jobOfferFileName.files.item(0).name))
+
+  
+
+
     
 
 

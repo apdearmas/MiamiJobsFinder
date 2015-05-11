@@ -101,12 +101,32 @@ namespace MiamiJobsFinder.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description")] JobOffer jobOffer)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description")] JobOffer jobOffer, HttpPostedFileBase jobOfferFileName)
         {
+
+
             if (ModelState.IsValid)
             {
-                db.Entry(jobOffer).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var filename = Path.GetFileName(jobOfferFileName.FileName);
+                if (!filename.Equals(jobOffer.JobOfferFileName))
+                {
+                    if (jobOffer.JobOfferFileName != null)
+                    {
+                        azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
+                    }
+
+
+                    if (jobOfferFileName != null)
+                    {
+
+                        jobOffer.JobOfferFileName = filename;
+                        azureStorageService.UploadBlob(filename, jobOfferFileName.ContentType, jobOfferFileName.InputStream);
+                    }
+
+                    db.Entry(jobOffer).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+
+                }
                 return RedirectToAction("Index");
             }
             return View(jobOffer);

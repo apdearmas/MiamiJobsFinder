@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "JobOffers", null, FormMethod.Post, new {enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -38,14 +38,6 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,10 +46,22 @@
                     <div class="editor-field">
                         @Html.Partial("_Edit", Model)
                     </div>
-
                 </fieldset>
             </div>
         </div>
+
+ 
+ 
+        <div class="form-group">
+            @Html.Label("File", new { @class = "control-label col-md-2" } )
+            <div class="col-md-10">
+                <input type="file" id="jobOfferFileName" name="jobOfferFileName" contenteditable="true" />
+            </div>
+        </div>
+
+        
+
+
 
 
         <div class="form-group">
