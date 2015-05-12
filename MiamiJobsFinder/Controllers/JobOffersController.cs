@@ -69,8 +69,7 @@ namespace MiamiJobsFinder.Controllers
                 if (httpPostedFileBase != null)
                 {
                     var filename = Path.GetFileName(httpPostedFileBase.FileName);
-                    jobOffer.JobOfferFileName = filename;
-                    azureStorageService.UploadBlob(filename, httpPostedFileBase.ContentType, httpPostedFileBase.InputStream);
+                    AddJobOfferFileToAzureStorage(jobOffer, httpPostedFileBase, filename);
                 }
 
                 db.JobOffers.Add(jobOffer);
@@ -110,15 +109,10 @@ namespace MiamiJobsFinder.Controllers
                 {
                     var filename = Path.GetFileName(httpPostedFileBase.FileName);
 
-                    if (filename != null && !filename.Equals(jobOffer.JobOfferFileName))
+                    if (AreNotEquals(jobOffer, filename))
                     {
-                        if (jobOffer.JobOfferFileName != null)
-                        {
-                            azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
-                        }
-
-                        jobOffer.JobOfferFileName = filename;
-                        azureStorageService.UploadBlob(filename, httpPostedFileBase.ContentType, httpPostedFileBase.InputStream);
+                        DeleteJobOfferFileFromAzureStorage(jobOffer);
+                        AddJobOfferFileToAzureStorage(jobOffer, httpPostedFileBase, filename);
                     }
                 }
 
@@ -129,6 +123,8 @@ namespace MiamiJobsFinder.Controllers
             }
             return View(jobOffer);
         }
+
+
 
         // GET: JobOffers/Delete/5
         public async Task<ActionResult> Delete(int? id)
@@ -152,10 +148,7 @@ namespace MiamiJobsFinder.Controllers
         {
             JobOffer jobOffer = await db.JobOffers.FindAsync(id);
 
-            if (jobOffer.JobOfferFileName != null)
-            {
-                azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
-            }
+            DeleteJobOfferFileFromAzureStorage(jobOffer);
 
             db.JobOffers.Remove(jobOffer);
 
@@ -171,5 +164,28 @@ namespace MiamiJobsFinder.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region Private Methods
+        private void DeleteJobOfferFileFromAzureStorage(JobOffer jobOffer)
+        {
+            if (jobOffer.JobOfferFileName != null)
+            {
+                azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
+            }
+        }
+
+        private void AddJobOfferFileToAzureStorage(JobOffer jobOffer, HttpPostedFileBase httpPostedFileBase, string filename)
+        {
+            jobOffer.JobOfferFileName = filename;
+            azureStorageService.UploadBlob(filename, httpPostedFileBase.ContentType, httpPostedFileBase.InputStream);
+        }
+
+        private static bool AreNotEquals(JobOffer jobOffer, string filename)
+        {
+            return filename != null && !filename.Equals(jobOffer.JobOfferFileName);
+        }
+
+        #endregion
+
     }
 }
