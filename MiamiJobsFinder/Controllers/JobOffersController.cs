@@ -58,7 +58,7 @@ namespace MiamiJobsFinder.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description")] JobOffer jobOffer, HttpPostedFileBase jobOfferFileName)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description")] JobOffer jobOffer, HttpPostedFileBase httpPostedFileBase)
         {
             if (ModelState.IsValid)
             {
@@ -66,11 +66,11 @@ namespace MiamiJobsFinder.Controllers
                 jobOffer.Location = db.Locations.First();
 
 
-                if (jobOfferFileName != null)
+                if (httpPostedFileBase != null)
                 {
-                    var filename = Path.GetFileName(jobOfferFileName.FileName);
+                    var filename = Path.GetFileName(httpPostedFileBase.FileName);
                     jobOffer.JobOfferFileName = filename;
-                    azureStorageService.UploadBlob(filename, jobOfferFileName.ContentType, jobOfferFileName.InputStream);
+                    azureStorageService.UploadBlob(filename, httpPostedFileBase.ContentType, httpPostedFileBase.InputStream);
                 }
 
                 db.JobOffers.Add(jobOffer);
@@ -101,32 +101,30 @@ namespace MiamiJobsFinder.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description")] JobOffer jobOffer, HttpPostedFileBase jobOfferFileName)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,IssuedDate,ExpirationDate,Description,JobOfferFileName")] JobOffer jobOffer, HttpPostedFileBase httpPostedFileBase)
         {
-
-
             if (ModelState.IsValid)
             {
-                var filename = Path.GetFileName(jobOfferFileName.FileName);
-                if (!filename.Equals(jobOffer.JobOfferFileName))
+
+                if (httpPostedFileBase != null)
                 {
-                    if (jobOffer.JobOfferFileName != null)
-                    {
-                        azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
-                    }
+                    var filename = Path.GetFileName(httpPostedFileBase.FileName);
 
-
-                    if (jobOfferFileName != null)
+                    if (filename != null && !filename.Equals(jobOffer.JobOfferFileName))
                     {
+                        if (jobOffer.JobOfferFileName != null)
+                        {
+                            azureStorageService.DeleteBlob(jobOffer.JobOfferFileName);
+                        }
 
                         jobOffer.JobOfferFileName = filename;
-                        azureStorageService.UploadBlob(filename, jobOfferFileName.ContentType, jobOfferFileName.InputStream);
+                        azureStorageService.UploadBlob(filename, httpPostedFileBase.ContentType, httpPostedFileBase.InputStream);
                     }
-
-                    db.Entry(jobOffer).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
-
                 }
+
+                db.Entry(jobOffer).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
             return View(jobOffer);

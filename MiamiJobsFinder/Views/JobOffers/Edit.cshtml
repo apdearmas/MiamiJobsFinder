@@ -13,6 +13,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.JobOfferFileName)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -51,17 +52,12 @@
         </div>
 
  
- 
         <div class="form-group">
             @Html.Label("File", new { @class = "control-label col-md-2" } )
             <div class="col-md-10">
-                <input type="file" id="jobOfferFileName" name="jobOfferFileName" contenteditable="true" />
+                <input type="file" id="httpPostedFileBase" name="httpPostedFileBase" contenteditable="true" />
             </div>
         </div>
-
-        
-
-
 
 
         <div class="form-group">
