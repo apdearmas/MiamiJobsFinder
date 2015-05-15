@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BusinessDomain;
+using System;
 
 namespace BDL
 {
@@ -41,8 +42,23 @@ namespace BDL
 
             foreach (var jobOffer in jobOffers)
             {
-                Message = Message + jobOffer.Description + System.Environment.NewLine; 
+                Message = Message + jobOffer.Description + System.Environment.NewLine + CreateLink(jobOffer.JobOfferFileName) + System.Environment.NewLine; 
             }
         }
+
+        #region Private Methods
+        private Uri GetUrlContainer()
+        {
+            AzureStorageService azureStorageService = new AzureStorageService();
+            return azureStorageService.getAzureContainerUri();
+        }
+
+        private string CreateLink(string fileName)
+        {
+            return GetUrlContainer().AbsoluteUri + "/" + fileName;
+        }
+        #endregion
+
+
     }
 }

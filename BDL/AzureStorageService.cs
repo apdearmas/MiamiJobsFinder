@@ -4,6 +4,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure;
 using System.IO;
+using System;
 
 namespace BDL
 {
@@ -53,6 +54,11 @@ namespace BDL
 
             CloudBlockBlob blockBlob = CloudBlobContainer.GetBlockBlobReference(fileName);
             blockBlob.Delete();
+        }
+
+        public  Uri getAzureContainerUri()
+        {
+            return this.CloudBlobContainer.Uri;
         }
     }
 }
