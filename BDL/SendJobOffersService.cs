@@ -55,7 +55,8 @@ namespace BDL
 
         private string CreateLink(string fileName)
         {
-            return GetUrlContainer().AbsoluteUri + "/" + fileName;
+            var url = GetUrlContainer().AbsoluteUri + "/" + fileName;
+            return string.Format("<p><a href=\"{0}\">{1}</a></p>", url, url);
         }
         #endregion
 
