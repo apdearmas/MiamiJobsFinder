@@ -17,7 +17,7 @@ namespace BDL
             // Create the email object first, then add the properties.
             var myMessage = new SendGridMessage();
             myMessage.AddTo(targetEmail);
-            myMessage.From = new MailAddress("apdearmas@sendgrid.com", "Antonio Pereira");
+            myMessage.From = new MailAddress("apdearmas@sendgrid.com", "Miami Jobs Finder");
             myMessage.Subject = subject;
             myMessage.Html = message;
 
