@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.IO;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using SendGrid;
 
@@ -10,10 +8,9 @@ namespace BDL
     {
         public void Send(string targetEmail, string subject, string message)
         {
-            var username = ConfigurationManager.AppSettings["SendGridUserName"];
-            var pswd = ConfigurationManager.AppSettings["SendGridPassword"];
+            IAzureKeyVaultService azureKeyVaultService = AzureKeyVaultService.Instance;
 
-            var credentials = new NetworkCredential(username, pswd);
+            var credentials = new NetworkCredential(azureKeyVaultService.SendGridUserName, azureKeyVaultService.SendGridPassword);
 
             // Create the email object first, then add the properties.
             var myMessage = new SendGridMessage();
