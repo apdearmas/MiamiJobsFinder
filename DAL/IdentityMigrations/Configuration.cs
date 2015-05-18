@@ -16,7 +16,8 @@ namespace DAL.IdentityMigrations
 
         protected override void Seed(IdentityDb context)
         {
-            if (!context.Users.Any(u => u.UserName == "elukse@yahoo.com"))
+            if (!context.Users.Any(u => u.UserName == "elukse@yahoo.com") ||
+                !context.Users.Any(u => u.UserName == "ruben.gimenez@aol.com"))
             {
                 var userStore = new UserStore<ApplicationUser>(context);
                 var roleStore = new RoleStore<IdentityRole>(context);
@@ -31,14 +32,31 @@ namespace DAL.IdentityMigrations
                     });
                 }
 
-                var user = new ApplicationUser
+                if (!context.Users.Any(u => u.UserName == "elukse@yahoo.com"))
                 {
-                    UserName = "elukse@yahoo.com",
-                    Email = "elukse@yahoo.com",
-                    EmailConfirmed = true
-                };
-                userManager.Create(user, "password@123");
-                userManager.AddToRole(user.Id, "admin");
+                    var liz = new ApplicationUser
+                    {
+                        UserName = "elukse@yahoo.com",
+                        Email = "elukse@yahoo.com",
+                        EmailConfirmed = true
+                    };
+                    userManager.Create(liz, "password@123");
+                    userManager.AddToRole(liz.Id, "admin");
+
+                }
+                if (!context.Users.Any(u => u.UserName == "ruben.gimenez@aol.com"))
+                {
+                    var ruben = new ApplicationUser
+                    {
+                        UserName = "ruben.gimenez@aol.com",
+                        Email = "ruben.gimenez@aol.com",
+                        EmailConfirmed = true
+                    };
+                    userManager.Create(ruben, "rubengimenez");
+                    userManager.AddToRole(ruben.Id, "admin");
+
+                }
+
             }
 
         }
