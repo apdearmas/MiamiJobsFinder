@@ -30,10 +30,21 @@ namespace BDL
 
             CreateEmailMessage(jobOffers);
 
+            List<string> emailRecipientList = RecipientList(customers);
+
+            //emailService.Send(customer.EMail, Subject, Message);
+            emailService.Send(emailRecipientList, Subject, Message);
+        }
+
+        private static List<string> RecipientList(System.Linq.IQueryable<Customer> customers)
+        {
+            List<string> emailList = new List<string>();
             foreach (var customer in customers)
             {
-                emailService.Send(customer.EMail, Subject, Message);
+                emailList.Add(customer.EMail);               
+
             }
+            return emailList;
         }
 
         private void CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
@@ -42,7 +53,10 @@ namespace BDL
 
             foreach (var jobOffer in jobOffers)
             {
-                Message = Message + jobOffer.Description + System.Environment.NewLine + CreateLink(jobOffer.JobOfferFileName) + System.Environment.NewLine; 
+                Message = Message + jobOffer.Title + System.Environment.NewLine +
+                                    jobOffer.Description + System.Environment.NewLine +
+                                    CreateLink(jobOffer.JobOfferFileName) + System.Environment.NewLine + 
+                                    "_____________________________" + System.Environment.NewLine;
             }
         }
 
@@ -55,6 +69,7 @@ namespace BDL
 
         private string CreateLink(string fileName)
         {
+            if (fileName == null) return null;
             var url = GetUrlContainer().AbsoluteUri + "/" + fileName;
             return string.Format("<p><a href=\"{0}\">{1}</a></p>", url, url);
         }
