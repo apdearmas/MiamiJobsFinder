@@ -22,7 +22,7 @@ namespace MiamiJobsFinder.Controllers
 
         public JobOffersController()
         {
-            azureStorageService = new AzureStorageService();
+            azureStorageService = AzureStorageService.Instance;
             
         }
 

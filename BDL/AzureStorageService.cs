@@ -10,10 +10,11 @@ namespace BDL
 {
     public class AzureStorageService : IAzureStorageService
     {
-        private CloudStorageAccount CloudStorageAccount { get; set; }
-        private CloudBlobContainer CloudBlobContainer { get; set; }
+        private static AzureStorageService _instance;
+        private readonly CloudStorageAccount CloudStorageAccount;
+        private readonly CloudBlobContainer CloudBlobContainer;
 
-        public AzureStorageService()
+        private AzureStorageService()
         {
             // Retrieve storage account from connection string.
             CloudStorageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
@@ -34,6 +35,11 @@ namespace BDL
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 });
             }
+        }
+
+        public static AzureStorageService Instance
+        {
+            get { return _instance ?? (_instance = new AzureStorageService()); }
         }
 
         public string UploadBlob(string filename, string contentType, Stream content)

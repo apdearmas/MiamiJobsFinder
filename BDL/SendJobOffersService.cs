@@ -63,7 +63,7 @@ namespace BDL
         #region Private Methods
         private Uri GetUrlContainer()
         {
-            AzureStorageService azureStorageService = new AzureStorageService();
+            AzureStorageService azureStorageService = AzureStorageService.Instance;
             return azureStorageService.getAzureContainerUri();
         }
 
