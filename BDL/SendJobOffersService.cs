@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BusinessDomain;
 using System;
+using System.Linq;
 
 namespace BDL
 {
@@ -12,10 +13,7 @@ namespace BDL
         private readonly IEmailService emailService;
 
         private const string Subject = "Ofertas de Trabajo";
-        public string Message = string.Empty;
-       
-      
-
+        
         public SendJobOffersService(ICustomerService customerService, IJobOffersService jobOffersService, IEmailService emailService)
         {
             this.customerService = customerService;
@@ -28,15 +26,15 @@ namespace BDL
             var customers = customerService.FindAll();
             var jobOffers = jobOffersService.FindAll();
 
-            CreateEmailMessage(jobOffers);
+            var message = CreateEmailMessage(jobOffers);
 
-            List<string> emailRecipientList = RecipientList(customers);
+            List<string> emailRecipientList = CreateRecipientList(customers);
 
             //emailService.Send(customer.EMail, Subject, Message);
-            emailService.Send(emailRecipientList, Subject, Message);
+            emailService.Send(emailRecipientList, Subject, message);
         }
 
-        private static List<string> RecipientList(System.Linq.IQueryable<Customer> customers)
+        private static List<string> CreateRecipientList(IQueryable<Customer> customers)
         {
             List<string> emailList = new List<string>();
             foreach (var customer in customers)
@@ -47,17 +45,27 @@ namespace BDL
             return emailList;
         }
 
-        private void CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
+        private string CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
         {
-            if (jobOffers == null) return;
-
-            foreach (var jobOffer in jobOffers)
+            if (jobOffers != null)
             {
-                Message = Message + jobOffer.Title + System.Environment.NewLine +
-                                    jobOffer.Description + System.Environment.NewLine +
-                                    CreateLink(jobOffer.JobOfferFileName) + System.Environment.NewLine + 
-                                    "_____________________________" + System.Environment.NewLine;
+                string message = string.Empty;
+                foreach (var jobOffer in jobOffers)
+                {
+                    message = message + System.Environment.NewLine +
+                                        jobOffer.Title +
+                                        System.Environment.NewLine +
+                                        jobOffer.Description +
+                                        System.Environment.NewLine +
+                                        CreateLink(jobOffer.JobOfferFileName) +
+                                        System.Environment.NewLine +
+                                        "_____________________________" +
+                                        System.Environment.NewLine;
+
+                }
+                return message;
             }
+            return string.Empty;
         }
 
         #region Private Methods
@@ -69,7 +77,7 @@ namespace BDL
 
         private string CreateLink(string fileName)
         {
-            if (fileName == null) return null;
+            if (fileName == null) return string.Empty;
             var url = GetUrlContainer().AbsoluteUri + "/" + fileName;
             return string.Format("<p><a href=\"{0}\">{1}</a></p>", url, url);
         }
