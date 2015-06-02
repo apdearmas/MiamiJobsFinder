@@ -18,7 +18,9 @@ namespace BDL
             myMessage.AddTo(targetEmail);
             myMessage.From = new MailAddress("apdearmas@sendgrid.com", "Miami Jobs Finder");
             myMessage.Subject = subject;
+            myMessage.Text = "Ofertas de Trabajo";
             myMessage.Html = message;
+
 
             
             // Create an Web transport for sending email.
@@ -40,6 +42,7 @@ namespace BDL
             myMessage.AddTo(targetEmail);
             myMessage.From = new MailAddress("apdearmas@sendgrid.com", "Miami Jobs Finder");
             myMessage.Subject = subject;
+            myMessage.Text = "Ofertas de Trabajo";
             myMessage.Html = message;
 
 

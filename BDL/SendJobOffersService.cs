@@ -40,16 +40,17 @@ namespace BDL
 
         private string CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
         {
+            string emailMessage = String.Empty;
             if (jobOffers != null)
             {
-                return jobOffers.Aggregate(string.Empty, (current, jobOffer) => 
+                emailMessage = jobOffers.Aggregate(string.Empty, (current, jobOffer) => 
                     current + 
                     jobOffer.Title + "<br />" +
                     jobOffer.Description + "<br />" +
                     CreateLink(jobOffer.JobOfferFileName) + "<br />" + "<hr>" +
                     "</p>");
             }
-            return string.Empty;
+            return emailMessage;
         }
 
         #region Private Methods
