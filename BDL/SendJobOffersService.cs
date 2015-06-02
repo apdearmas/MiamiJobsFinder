@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using BusinessDomain;
 using System;
-using System.Linq;
 
 namespace BDL
 {
@@ -30,40 +30,24 @@ namespace BDL
 
             List<string> emailRecipientList = CreateRecipientList(customers);
 
-            //emailService.Send(customer.EMail, Subject, Message);
             emailService.Send(emailRecipientList, Subject, message);
         }
 
-        private static List<string> CreateRecipientList(IQueryable<Customer> customers)
+        private static List<string> CreateRecipientList(IEnumerable<Customer> customers)
         {
-            List<string> emailList = new List<string>();
-            foreach (var customer in customers)
-            {
-                emailList.Add(customer.EMail);               
-
-            }
-            return emailList;
+            return customers.Select(customer => customer.EMail).ToList();
         }
 
         private string CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
         {
             if (jobOffers != null)
             {
-                string message = string.Empty;
-                foreach (var jobOffer in jobOffers)
-                {
-                    message = message + System.Environment.NewLine +
-                                        jobOffer.Title +
-                                        System.Environment.NewLine +
-                                        jobOffer.Description +
-                                        System.Environment.NewLine +
-                                        CreateLink(jobOffer.JobOfferFileName) +
-                                        System.Environment.NewLine +
-                                        "_____________________________" +
-                                        System.Environment.NewLine;
-
-                }
-                return message;
+                return jobOffers.Aggregate(string.Empty, (current, jobOffer) => 
+                    current + 
+                    jobOffer.Title + "<br />" +
+                    jobOffer.Description + "<br />" +
+                    CreateLink(jobOffer.JobOfferFileName) + "<br />" + "<hr>" +
+                    "</p>");
             }
             return string.Empty;
         }
