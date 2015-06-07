@@ -1,10 +1,8 @@
-﻿namespace BDL
+﻿using System.Collections.Generic;
+namespace BDL
 {
     public interface IEmailService
     {
-        void Send(string targetEmail, string subject, string message);
-
-
-        void Send(System.Collections.Generic.List<string> emailRecipientList, string Subject, string Message);
+        void Send(List<string> emailRecipientList, string subject, string message);
     }
 }

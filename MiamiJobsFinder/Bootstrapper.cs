@@ -40,6 +40,8 @@ namespace MiamiJobsFinder
         container.RegisterType<IRepository<JobOffer>, Repository<JobOffer>>();
         container.RegisterType<IEmailService, BDL.EmailService>();
         container.RegisterType<ISmtpClientWrapper, SmtpClientWrapper>();
+
+        container.RegisterInstance(typeof(IAzureStorageService), AzureStorageService.Instance);
     }
   }
 }

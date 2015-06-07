@@ -10,12 +10,6 @@ namespace BDL
             SmtpClientWrapper = smtpClientWrapper;
         }
                 
-
-        public void Send(string targetEmail, string subject, string message)
-        {
-            SmtpClientWrapper.Send(targetEmail, subject, message);
-        }
-
         public void Send(List<string> targetEmail, string subject, string message)
         {
             SmtpClientWrapper.Send(targetEmail, subject, message);

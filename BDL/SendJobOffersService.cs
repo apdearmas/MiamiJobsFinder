@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BusinessDomain;
 using System;
+using Microsoft.Practices.Unity;
 
 namespace BDL
 {
@@ -11,14 +12,18 @@ namespace BDL
         private readonly ICustomerService customerService;
         private readonly IJobOffersService jobOffersService;
         private readonly IEmailService emailService;
+        private IAzureStorageService azureStorageService;
 
         private const string Subject = "Ofertas de Trabajo";
         
-        public SendJobOffersService(ICustomerService customerService, IJobOffersService jobOffersService, IEmailService emailService)
+        public SendJobOffersService(IUnityContainer unityContainer, ICustomerService customerService, IJobOffersService jobOffersService, IEmailService emailService)
         {
             this.customerService = customerService;
             this.jobOffersService = jobOffersService;
             this.emailService = emailService;
+
+
+            azureStorageService = unityContainer.Resolve<IAzureStorageService>();
         }
 
         public void SendJobOffers()
@@ -38,7 +43,7 @@ namespace BDL
             return customers.Select(customer => customer.EMail).ToList();
         }
 
-        private string CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
+        public string CreateEmailMessage(IEnumerable<JobOffer> jobOffers)
         {
             string emailMessage = String.Empty;
             if (jobOffers != null)
@@ -56,14 +61,14 @@ namespace BDL
         #region Private Methods
         private Uri GetUrlContainer()
         {
-            AzureStorageService azureStorageService = AzureStorageService.Instance;
+            
             return azureStorageService.getAzureContainerUri();
         }
 
         private string CreateLink(string fileName)
         {
             if (fileName == null) return string.Empty;
-            var url = GetUrlContainer().AbsoluteUri + "/" + fileName;
+            var url = GetUrlContainer().AbsoluteUri  + fileName;
             return string.Format("<p><a href=\"{0}\">{1}</a></p>", url, url);
         }
         #endregion

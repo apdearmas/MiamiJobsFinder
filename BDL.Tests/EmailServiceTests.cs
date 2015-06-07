@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System.Collections.Generic;
 using Xunit;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
@@ -24,10 +25,13 @@ namespace BDL.Tests
         [Fact]
         public void VerifySendIsCalled()
         {
-            smtpClientWrapperMock.Setup(m => m.Send(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Verifiable();
+            smtpClientWrapperMock.Setup(m => m.Send(It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>())).Verifiable();
+            
             emailService = new EmailService(smtpClientWrapperMock.Object);
-            emailService.Send(string.Empty, string.Empty, string.Empty);
-            smtpClientWrapperMock.Verify(m => m.Send(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+            
+            emailService.Send(new List<string>(), string.Empty, string.Empty);
+
+            smtpClientWrapperMock.Verify(m => m.Send(It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
         }
 
         
