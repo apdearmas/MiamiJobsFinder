@@ -1,11 +1,9 @@
-﻿using System.Net.Mail;
+﻿using System.Collections.Generic;
 
 namespace BDL
 {
     public interface  ISmtpClientWrapper
     {
-        void Send(string targetEmail, string subject, string message);
-
-        void Send(System.Collections.Generic.List<string> targetEmail, string subject, string message);
+        void Send(List<string> targetEmail, string subject, string message);
     }
 }
