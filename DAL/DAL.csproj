@@ -90,6 +90,10 @@
     <Compile Include="MiamiJobsFinderMigrations\201504131648495_ChangeJobOfferURLToJobOfferFileName.Designer.cs">
       <DependentUpon>201504131648495_ChangeJobOfferURLToJobOfferFileName.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiamiJobsFinderMigrations\201506082047360_AddingDataAnnotation.cs" />
+    <Compile Include="MiamiJobsFinderMigrations\201506082047360_AddingDataAnnotation.Designer.cs">
+      <DependentUpon>201506082047360_AddingDataAnnotation.cs</DependentUpon>
+    </Compile>
     <Compile Include="MiamiJobsFinderMigrations\Configuration.cs" />
     <Compile Include="MigrationExecution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MiamiJobsFinderMigrations\201504131648495_ChangeJobOfferURLToJobOfferFileName.resx">
       <DependentUpon>201504131648495_ChangeJobOfferURLToJobOfferFileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiamiJobsFinderMigrations\201506082047360_AddingDataAnnotation.resx">
+      <DependentUpon>201506082047360_AddingDataAnnotation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

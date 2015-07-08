@@ -11,8 +11,19 @@ namespace BusinessDomain
         const int DAYSPAN = 30;
 
         public int Id { get; set; }
+        
+        [Required]
+        [StringLength(50)]
         public string Title { get; set; }
+        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [Display(Name = "Issued Date")]
         public DateTime IssuedDate { get; set; }
+        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [Display(Name = "Expiration Date")]
         public DateTime ExpirationDate { get; set; }
 
         [AllowHtml]
@@ -21,6 +32,7 @@ namespace BusinessDomain
         public ContactPerson ContactPerson { get; set; }
         public Location Location { get; set; }
 
+        [Display(Name = "File Name")]
         public string JobOfferFileName { get; set; }
 
         
